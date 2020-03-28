@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import {StoreProvider} from '../store';
 import Layout from '../components/Layout';
 const Home = () => (
   <>
@@ -6,8 +7,11 @@ const Home = () => (
       <title>KGdemo</title>
       <link rel="icon" href="./icons/kg.svg" />
     </Head>
+    
     <div className="container">
-      <Layout/>
+      <StoreProvider>
+        <Layout/>
+      </StoreProvider>
     </div>
 
     <style jsx>{`
