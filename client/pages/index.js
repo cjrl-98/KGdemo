@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Layout from '../components/Layout';
+import Formg from "../components/Form";
 const Home = () => (
   <>
     <Head>
@@ -8,6 +9,7 @@ const Home = () => (
     </Head>
     <div className="container">
       <Layout/>
+      <Form/>
     </div>
 
     <style jsx>{`
