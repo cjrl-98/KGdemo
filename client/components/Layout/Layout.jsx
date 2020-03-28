@@ -1,4 +1,3 @@
-import CreditCard from '../CreditCard';
 const Layout = () => (
     <>
         <main className="layout">  

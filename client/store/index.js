@@ -11,8 +11,10 @@ export const StoreProvider = (props) => {
         }
     );
 
+    const [selectedInput, setSelectedInput] = useState(null);
+
     return(
-        <StoreContext.Provider value={{formInput, setFormInput}}>
+        <StoreContext.Provider value={{formInput, setFormInput, selectedInput, setSelectedInput}}>
             {props.children}
         </StoreContext.Provider>
     );
