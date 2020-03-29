@@ -1,4 +1,5 @@
 import {useState, createContext} from 'react';
+import Form from "../components/Form";
 
 export const StoreContext = createContext();
 
@@ -10,12 +11,13 @@ export const StoreProvider = (props) => {
             "cardHolderName" : null
         }
     );
-
+    
     const [selectedInput, setSelectedInput] = useState(null);
 
     return(
         <StoreContext.Provider value={{formInput, setFormInput, selectedInput, setSelectedInput}}>
             {props.children}
+            <Form/>
         </StoreContext.Provider>
     );
 }
