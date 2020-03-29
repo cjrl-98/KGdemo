@@ -1,14 +1,18 @@
 import Head from 'next/head'
+import {StoreProvider} from '../store';
 import Layout from '../components/Layout';
-import Form from "../components/Form";
+
 const Home = () => (
   <>
     <Head>
       <title>KGdemo</title>
       <link rel="icon" href="./icons/kg.svg" />
     </Head>
+    
     <div className="container">
-      <Layout/>
+      <StoreProvider>
+        <Layout/>
+      </StoreProvider>
     </div>
 
     <style jsx>{`
