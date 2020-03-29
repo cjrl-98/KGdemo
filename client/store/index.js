@@ -16,7 +16,6 @@ export const StoreProvider = (props) => {
     return(
         <StoreContext.Provider value={{formInput, setFormInput, selectedInput, setSelectedInput}}>
             {props.children}
-            <Form/>
         </StoreContext.Provider>
     );
 }

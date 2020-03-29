@@ -3,6 +3,7 @@ import React from 'react';
 export default class Form extends React.Component{
     submitFunction(e){
         e.preventDefault();
+        console.log(form.find(":invalid"))
         let ccNumber = document.getElementById("ccNumber").value;
         let name = document.getElementById("name").value;
         let expiry = document.getElementById("ccExpiry").value
@@ -17,6 +18,7 @@ export default class Form extends React.Component{
         else {
           let array = ["Visa", ccNumber, name, exipry];
         };
+        // @TODO CREATE THIS FUNCTION IN THE PARENT TO UPDATE THE STATE
         this.props.updateState(array);
       }
     
