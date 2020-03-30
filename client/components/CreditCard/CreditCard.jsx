@@ -2,7 +2,8 @@ import { useContext } from 'react';
 import { StoreContext } from '../../store';
 
 export default function CreditCard () {
-    const { formInput } = useContext(StoreContext)
+    const { formInput, setFormInput} = useContext(StoreContext)
+    
     return(
         <>
             <article>
