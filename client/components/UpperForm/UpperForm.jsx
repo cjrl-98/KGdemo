@@ -32,6 +32,7 @@ const UpperForm = () => {
         id="name"
         name="name"
         placeholder="Name on Card"
+        minlength="2"
         onChange={nameChange}
         required
       />
