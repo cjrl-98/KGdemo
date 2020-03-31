@@ -2,13 +2,19 @@ import { useContext } from "react";
 import { StoreContext } from "../../store";
 
 const UpperForm = () => {
-  const { formInput, setFormInput } = useContext(StoreContext);
+  const { formInput, setFormInput, setSelectedInput } = useContext(StoreContext);
+
+  const inputNames = {
+    'CARDNUMBER' : 'CARDNUMBER',
+    'EXPIRYDATE' : 'EXPIRYDATE',
+    'CARDHOLDERNAME' : 'CARDHOLDERNAME'
+  }
 
   const nameChange = e => {
-    console.log("name changed to", e.target.value);
-    setFormInput({
-      cardHolderName: e.target.value
-    });
+    // either asign the value to a variable or use event.persist to allows us to access the event asynchronously
+    const value = e.target.value;
+    // use prevState to update only a key value pair
+    setFormInput( prevState => ({ ...prevState, cardHolderName : value }) );
   };
 
   const ccNumChange = e => {
@@ -20,9 +26,10 @@ const UpperForm = () => {
 
     // https://webdesign.tutsplus.com/tutorials/auto-formatting-input-value--cms-26745
 
-    setFormInput({
-      cardNumber: e.target.value
-    });
+    // either asign the value to a variable or use event.persist to allows us to access the event asynchronously
+    const value = e.target.value;
+    // use prevState to update only a key value pair
+    setFormInput( prevState => ({ ...prevState, cardNumber : value }) );
   };
 
   return (
@@ -36,11 +43,12 @@ const UpperForm = () => {
         placeholder="Name on Card"
         minlength="2"
         onChange={nameChange}
+        onFocus={ () => setSelectedInput(inputNames.CARDHOLDERNAME) }
         required
       />
       {/* https://medium.com/free-code-camp/three-ways-to-title-case-a-sentence-in-javascript-676a9175eb27 */}
       {/* @TODO valid credit card number pattern to be revised */}
-      <label className="uForm__label" HTMLfor="ccNumber">Cardholder Name</label>
+      <label className="uForm__label" HTMLfor="ccNumber">Card Number</label>
       <input
         className="uForm__input"
         type=""
@@ -48,6 +56,7 @@ const UpperForm = () => {
         name="ccNumber"
         placeholder="Card Number"
         onChange={ccNumChange}
+        onFocus={ () => setSelectedInput(inputNames.CARDNUMBER) }
         required
       />
 
