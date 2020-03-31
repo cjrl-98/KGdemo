@@ -1,6 +1,8 @@
+import CreditCard from '../CreditCard';
 const Layout = () => (
     <>
         <main className="layout">  
+            <CreditCard/>
         </main>
 
         <style jsx>{`

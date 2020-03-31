@@ -13,6 +13,7 @@ export default function CreditCard () {
                     <div className='credit_date'>
                         <p className='credit_valid-label'>VALID THRU</p>
                     </div>
+                    <div className='selected-input'/>
                 </div>
             </article>
 
@@ -60,6 +61,15 @@ export default function CreditCard () {
                     font-weight: 700;
                 }
 
+                .selected-input{
+                    position: absolute;
+                    top: 93px; 
+                    left: 10px; 
+                    width: 215px;
+                    height: 28px;
+                    border-radius: 15px;
+                    border: 2px solid #ffffff;
+                }
             `}</style>
         </>
     )
