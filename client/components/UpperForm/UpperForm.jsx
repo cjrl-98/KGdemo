@@ -13,14 +13,17 @@ const UpperForm = () => {
   };
 
   const ccNumChange = e => {
-    e.target.value = e.target.value.replace(/[^\d]+/g, "")
+    e.target.value = e.target.value.replace(/[^\d]+/g, "");
     // blocks non numerical string
+    e.target.value = e.target.value.replace(/^(.{1,16}).*/g, '$1').replace(/(.{4})/g, '$1 ').trim();
+    //gets the first 16 and the seperate them by 4s
+
     let v = e.target.value
 
     // https://webdesign.tutsplus.com/tutorials/auto-formatting-input-value--cms-26745
     var matches = v.match(/\d{4,16}/g);
     // https://www.peterbe.com/plog/cc-formatter
-    console.log(matches)
+    // console.log(matches)
     // [\d]{1,3}
 
     setFormInput({
