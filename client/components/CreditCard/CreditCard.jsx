@@ -18,6 +18,8 @@ export default function CreditCard () {
             </article>
 
             <style jsx>{`
+                @import url('https://fonts.googleapis.com/css2?family=Squada+One&display=swap');
+
                 .credit{
                     position: relative;
                     width: 266px;
@@ -50,6 +52,7 @@ export default function CreditCard () {
                     left: 25px;
                     font-size: 16px;
                     letter-spacing: 1px;
+                    font-family: 'Squada One', cursive;
                 }
 
                 .credit_valid-label{

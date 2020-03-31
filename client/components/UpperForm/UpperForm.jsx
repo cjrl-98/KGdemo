@@ -27,7 +27,9 @@ const UpperForm = () => {
 
   return (
     <>
+      <label className="uForm__label" HTMLfor="name">Cardholder Name</label>
       <input
+        className="uForm__input"
         type="text"
         id="name"
         name="name"
@@ -38,7 +40,9 @@ const UpperForm = () => {
       />
       {/* https://medium.com/free-code-camp/three-ways-to-title-case-a-sentence-in-javascript-676a9175eb27 */}
       {/* @TODO valid credit card number pattern to be revised */}
+      <label className="uForm__label" HTMLfor="ccNumber">Cardholder Name</label>
       <input
+        className="uForm__input"
         type=""
         id="ccNumber"
         name="ccNumber"
@@ -46,6 +50,21 @@ const UpperForm = () => {
         onChange={ccNumChange}
         required
       />
+
+    <style jsx>{`
+      .uForm__label{
+        font-size:14px;
+        font-color:#494949;
+      }
+
+      .uForm__input{
+        border: none;
+        border-bottom: 2px solid #06070b;
+      }
+      .uForm__input:focus{
+        outline:none;
+      }
+    `}</style>
     </>
   );
 };
