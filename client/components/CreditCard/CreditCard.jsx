@@ -10,7 +10,7 @@ export default function CreditCard () {
                 <div className='credit'>
                     <img className='credit_visa' src='/icons/visa.svg' alt='visa logo'/>
                     <img className='credit_chip' src='/icons/credit-chip.svg' alt='credit card chip'/>
-                    <p className='credit_number'>0000 0000 0000 0000</p>
+                    <p className='credit_number'>{formInput.cardNumber}</p>
                     <div className='credit_date'>
                         <p className='credit_valid-label'>VALID THRU</p>
                     </div>

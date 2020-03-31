@@ -3,7 +3,6 @@ import { StoreContext } from "../../store";
 
 const UpperForm = () => {
   const { formInput, setFormInput } = useContext(StoreContext);
-  // console.log(setFormInput)
 
   const nameChange = e => {
     console.log("name changed to", e.target.value);
@@ -17,14 +16,9 @@ const UpperForm = () => {
     // blocks non numerical string
     e.target.value = e.target.value.replace(/^(.{1,16}).*/g, '$1').replace(/(.{4})/g, '$1 ').trim();
     //gets the first 16 and the seperate them by 4s
-
-    let v = e.target.value
+    // the longer way to regex this https://www.peterbe.com/plog/cc-formatter
 
     // https://webdesign.tutsplus.com/tutorials/auto-formatting-input-value--cms-26745
-    var matches = v.match(/\d{4,16}/g);
-    // https://www.peterbe.com/plog/cc-formatter
-    // console.log(matches)
-    // [\d]{1,3}
 
     setFormInput({
       cardNumber: e.target.value
@@ -47,12 +41,10 @@ const UpperForm = () => {
         type=""
         id="ccNumber"
         name="ccNumber"
-        pattern="^5[1-5]\d{2}$"
         placeholder="Card Number"
         onChange={ccNumChange}
         required
       />
-      {/* valid expiry date from 05-20 to 12-29 */}
     </>
   );
 };
