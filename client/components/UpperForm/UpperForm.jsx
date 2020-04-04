@@ -47,7 +47,7 @@ const UpperForm = () => {
         required
       />
       {/* https://medium.com/free-code-camp/three-ways-to-title-case-a-sentence-in-javascript-676a9175eb27 */}
-      {/* @TODO valid credit card number pattern to be revised */}
+
       <label className="uForm__label" HTMLfor="ccNumber">Card Number</label>
       <input
         className="uForm__input"

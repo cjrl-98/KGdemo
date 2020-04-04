@@ -1,9 +1,11 @@
 import CreditCard from "../CreditCard";
 import Form from "../Form";
+import Title from "../Nav/Nav";
 
 const Layout = () => (
     <>
         <main className="layout">
+            <Title/>
             <div className="content">
                 <section className="content__credit">
                     <CreditCard/>
@@ -16,11 +18,14 @@ const Layout = () => (
 
         <style jsx>{`
             .layout{
-                display:flex;
                 width: 100vw;
                 height: 100%;
+                display:flex;
+                flex-direction: column;
+                align-items: center;
             }
             .content{
+                display:flex;
             }
             .credit{
                 width:
