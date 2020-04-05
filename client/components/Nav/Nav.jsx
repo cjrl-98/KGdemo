@@ -48,11 +48,11 @@ export default function Title() {
         .nav__section {
           width: calc(100% / 3);
           text-align: center;
-          border-bottom: 2px solid grey;
+          border-bottom: 2px solid #b8b8b8;
         }
         .active {
-          color: pink;
-          border-bottom: 2px solid pink;
+          color: #f0425c;
+          border-bottom: 2px solid #f0425c;
         }
       `}</style>
     </>

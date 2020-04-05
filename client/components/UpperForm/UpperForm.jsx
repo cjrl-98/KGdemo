@@ -54,27 +54,29 @@ const UpperForm = () => {
         type="text"
         id="ccNumber"
         name="ccNumber"
-        placeholder="Card Number"
+        placeholder="**** **** **** ****"
         onChange={ccNumChange}
         onFocus={ () => setSelectedInput(inputNames.CARDNUMBER) }
         required
       />
-    {/* since this is JSX styling, going to yolo the css */}
+    {/* since this is JSX styling, going to YOLO the css */}
     <style jsx>{`
       .uForm__label{
-        font-size:14px;
+        font-size:10px;
         font-color:#494949;
+        margin-bottom: 10px;
       }
 
       .uForm__input{
         box-sizing: border-box;
         width: 100%;
         height: 25px;
-        border: none;
         background: no-repeat;
         background-position: 3% center;
+        border: none;
+        border-bottom: 2px solid #b8b8b8;
         padding: 5px 5px 5px 15%;
-        border-bottom: 2px solid #06070b;
+        margin-bottom: 20px;
       }
       .uForm__input:focus{
         outline:none;
