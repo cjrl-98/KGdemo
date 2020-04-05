@@ -51,7 +51,7 @@ const UpperForm = () => {
       <label className="uForm__label" HTMLfor="ccNumber">Card Number</label>
       <input
         className="uForm__input"
-        type=""
+        type="text"
         id="ccNumber"
         name="ccNumber"
         placeholder="Card Number"
@@ -59,7 +59,7 @@ const UpperForm = () => {
         onFocus={ () => setSelectedInput(inputNames.CARDNUMBER) }
         required
       />
-
+    {/* since this is JSX styling, going to yolo the css */}
     <style jsx>{`
       .uForm__label{
         font-size:14px;
@@ -67,12 +67,25 @@ const UpperForm = () => {
       }
 
       .uForm__input{
+        box-sizing: border-box;
+        width: 100%;
+        height: 25px;
         border: none;
+        background: no-repeat;
+        background-position: 3% center;
+        padding: 5px 5px 5px 15%;
         border-bottom: 2px solid #06070b;
       }
       .uForm__input:focus{
         outline:none;
       }
+      input[type=text]:first-of-type {
+        background-image: url(./icons/user-check-solid.svg);
+      }
+      input[type=text]:nth-of-type(2) {
+        background-image: url(./icons/credit-card-regular.svg)
+      }
+
     `}</style>
     </>
   );

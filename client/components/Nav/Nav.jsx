@@ -6,7 +6,7 @@ export default function Title() {
           <figure className="nav__figure">
             <img className="nav__img" src="./icons/kg.svg" alt="KGpay" />
           </figure>
-          <span>KG Pay</span>
+          <span>KGpay</span>
         </div>
         <ul className="nav__list">
           <li className="nav__section">Customer Info</li>
@@ -20,12 +20,23 @@ export default function Title() {
         .nav__list,
         .nav__section {
           margin: 0;
+          padding: 0;
         }
         .nav,
         .nav ul {
           display: flex;
           justify-content: space-between;
-          width: 70%;
+        }
+        .nav {
+          width: 100%;
+        }
+        .nav__logo {
+          display: flex;
+          align-items: center;
+          width: 100px;
+        }
+        .nav ul {
+          flex-grow:1;
         }
         .nav__section {
           list-style: none;
@@ -33,10 +44,7 @@ export default function Title() {
         .nav__figure {
           margin-right: 5px; 
         }
-        .nav__logo {
-          display: flex;
-          align-items: center;
-        }
+        
         .nav__section {
           width: calc(100% / 3);
           text-align: center;

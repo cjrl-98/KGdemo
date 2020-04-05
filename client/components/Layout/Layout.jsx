@@ -19,6 +19,7 @@ const Layout = () => (
         <style jsx>{`
             .layout{
                 width: 100vw;
+                max-width: 800px;
                 height: 100%;
                 display:flex;
                 flex-direction: column;
@@ -26,6 +27,7 @@ const Layout = () => (
             }
             .content{
                 display:flex;
+                margin-top: 20px;
             }
             .credit{
                 width:
