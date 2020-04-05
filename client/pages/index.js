@@ -56,6 +56,7 @@ const Home = () => (
         padding: 0;
         margin: 0;
         font-family: 'Muli';
+        color: #b8b8b8;
       }
 
       * {
