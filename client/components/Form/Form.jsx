@@ -18,7 +18,7 @@ export default class Form extends React.Component {
     );
     if (expiryLength === 5 && pattern.test(expiryDate)) {
       document.getElementById("ccExpiry").style.color = "black";
-      cvv.focus();
+      this.cvv.focus();
     } else if (expiryLength === 5 && !pattern.test(expiryDate)) {
       document.getElementById("ccExpiry").style.color = "red";
     }
@@ -38,7 +38,7 @@ export default class Form extends React.Component {
       ((checkNum1 === "3" && cvvLength === 4) ||
         (checkNum1 != "3" && cvvLength === 3))
     ) {
-      submit.focus();
+      this.submit.focus();
     }
   }
 
