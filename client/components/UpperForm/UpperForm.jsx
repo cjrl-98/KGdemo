@@ -47,32 +47,47 @@ const UpperForm = () => {
         required
       />
       {/* https://medium.com/free-code-camp/three-ways-to-title-case-a-sentence-in-javascript-676a9175eb27 */}
-      {/* @TODO valid credit card number pattern to be revised */}
+
       <label className="uForm__label" HTMLfor="ccNumber">Card Number</label>
       <input
         className="uForm__input"
-        type=""
+        type="text"
         id="ccNumber"
         name="ccNumber"
-        placeholder="Card Number"
+        placeholder="**** **** **** ****"
         onChange={ccNumChange}
         onFocus={ () => setSelectedInput(inputNames.CARDNUMBER) }
         required
       />
-
+    {/* since this is JSX styling, going to YOLO the css */}
     <style jsx>{`
       .uForm__label{
-        font-size:14px;
+        font-size:10px;
         font-color:#494949;
+        margin-bottom: 10px;
       }
 
       .uForm__input{
+        box-sizing: border-box;
+        width: 100%;
+        height: 25px;
+        background: no-repeat;
+        background-position: 3% center;
         border: none;
-        border-bottom: 2px solid #06070b;
+        border-bottom: 2px solid #b8b8b8;
+        padding: 5px 5px 5px 15%;
+        margin-bottom: 20px;
       }
       .uForm__input:focus{
         outline:none;
       }
+      input[type=text]:first-of-type {
+        background-image: url(./icons/user-check-solid.svg);
+      }
+      input[type=text]:nth-of-type(2) {
+        background-image: url(./icons/credit-card-regular.svg)
+      }
+
     `}</style>
     </>
   );
