@@ -27,8 +27,8 @@ const Home = () => (
     `}</style>
 
     <style jsx global>{`
-      @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;500;700&display=swap');
-      
+      @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;500;700&display=swap')
+
       @font-face {
         font-family: 'Muli'
         font-style: normal;
