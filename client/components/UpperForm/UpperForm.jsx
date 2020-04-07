@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { StoreContext } from "../../store";
+import { loadGetInitialProps } from "next/dist/next-server/lib/utils";
 
 const UpperForm = () => {
   const { formInput, setFormInput, setSelectedInput } = useContext(StoreContext);
@@ -59,6 +60,11 @@ const UpperForm = () => {
         onFocus={ () => setSelectedInput(inputNames.CARDNUMBER) }
         required
       />
+      <div className="uForm__err">
+        {/* <p className="uForm__msg">{props}</p> */}
+        <p className="uForm__msg">test</p>
+        {/* how to implement the message? */}
+      </div>
     {/* since this is JSX styling, going to YOLO the css */}
     <style jsx>{`
       .uForm__label{
@@ -76,18 +82,27 @@ const UpperForm = () => {
         border: none;
         border-bottom: 2px solid #b8b8b8;
         padding: 5px 5px 5px 15%;
-        margin-bottom: 20px;
       }
       .uForm__input:focus{
         outline:none;
       }
       input[type=text]:first-of-type {
+        margin-bottom: 20px;
         background-image: url(./icons/user-check-solid.svg);
       }
       input[type=text]:nth-of-type(2) {
         background-image: url(./icons/credit-card-regular.svg)
       }
-
+      .uForm__err {
+        display:flex;
+        align-items: center;
+        height: 20px;
+      }
+      .uForm__msg {
+        font-size:12px;
+        color: red;
+        margin: 0;
+      }
     `}</style>
     </>
   );
