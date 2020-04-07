@@ -48,12 +48,12 @@ export default function CreditCard () {
                 <div className='credit'>
                     <img className='credit__visa' src='/icons/visa.svg' alt='visa logo'/>
                     <img className='credit__chip' src='/icons/credit-chip.svg' alt='credit card chip'/>
-                    <p className='credit__number'>{formInput.cardNumber}</p>
+                    <p className='credit__number'>{ formInput.cardNumber ? formInput.cardNumber : '0000 0000 0000 0000' }</p>
                     <div className='credit__date'>
                         <p className='credit__valid-label'>VALID THRU</p>
-                        <p className='credit__valid'>{formInput.expiryDate}</p>
+                        <p className='credit__valid'>{ formInput.expiryDate ? formInput.expiryDate : '05/20' }</p>
                     </div>
-                    <p className='credit__cardholder'>{formInput.cardHolderName}</p>
+                    <p className='credit__cardholder'>{formInput.cardHolderName ? formInput.cardHolderName : 'Christian Lagasca'}</p>
                     <motion.div animate={bioBorderControl} className="credit_selected-input"></motion.div>
                 </div>
                 <div className='credit credit--back'/>

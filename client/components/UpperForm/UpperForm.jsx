@@ -9,6 +9,14 @@ const UpperForm = () => {
     const value = e.target.value;
     // use prevState to update only a key value pair
     setFormInput( prevState => ({ ...prevState, cardHolderName : value }) );
+    if(
+      formInput.submitEnabled === false &&
+      formInput.cardNumber !== null && 
+      formInput.expiryDate !== null &&
+      formInput.cvv !== null
+  ){
+      setFormInput( prevState => ({ ...prevState, submitEnabled : true }) );
+  }
   };
 
   const ccNumChange = e => {
@@ -24,18 +32,26 @@ const UpperForm = () => {
     const value = e.target.value;
     // use prevState to update only a key value pair
     setFormInput( prevState => ({ ...prevState, cardNumber : value }) );
+    if(
+      formInput.submitEnabled === false &&
+      formInput.expiryDate !== null &&
+      formInput.cardHolderName !== null &&
+      formInput.cvv !== null
+    ){
+        setFormInput( prevState => ({ ...prevState, submitEnabled : true }) );
+    }
   };
 
   return (
     <>
-      <label className="uForm__label" HTMLfor="name">Cardholder Name</label>
+      <label className="uForm__label" htmlFor="name">Cardholder Name</label>
       <input
         className="uForm__input"
         type="text"
         id="name"
         name="name"
         placeholder="Name on Card"
-        minlength="2"
+        minLength="2"
         onChange={nameChange}
         onFocus={ () => setSelectedInput(inputNames.CARDHOLDERNAME) }
         onBlur={ () => setSelectedInput(inputNames.DEFAULT) }
@@ -43,7 +59,7 @@ const UpperForm = () => {
       />
       {/* https://medium.com/free-code-camp/three-ways-to-title-case-a-sentence-in-javascript-676a9175eb27 */}
 
-      <label className="uForm__label" HTMLfor="ccNumber">Card Number</label>
+      <label className="uForm__label" htmlFor="ccNumber">Card Number</label>
       <input
         className="uForm__input"
         type="text"

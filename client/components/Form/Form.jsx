@@ -19,9 +19,18 @@ export default class Form extends React.Component {
     if (expiryLength === 5 && pattern.test(expiryDate)) {
       document.getElementById("ccExpiry").style.color = "black";
       this.context.setFormInput( prevState => ({ ...prevState, expiryDate : expiryDate }) );
+      if(
+        this.context.formInput.submitEnabled === false &&
+        this.context.formInput.cardNumber !== null && 
+        this.context.formInput.cardHolderName !== null &&
+        this.context.formInput.cvv !== null
+      ){
+        this.context.setFormInput( prevState => ({ ...prevState, submitEnabled : true }) );
+      }
       this.cvv.focus();
-    } else if (expiryLength === 5 && !pattern.test(expiryDate)) {
+    } else if (expiryLength !== 5 && !pattern.test(expiryDate)) {
       document.getElementById("ccExpiry").style.color = "red";
+      this.context.setFormInput( prevState => ({ ...prevState, submitEnabled : false }) );
     }
   }
 
@@ -34,17 +43,22 @@ export default class Form extends React.Component {
       .value.substring(0, 1)
       .trim();
     let pattern = RegExp("^[1-9]([0-9]{2}$|[0-9]{3}$)");
-    if (
-      pattern.test(cvvValue) &&
-      ((checkNum1 === "3" && cvvLength === 4) ||
-        (checkNum1 != "3" && cvvLength === 3))
-    ) {
-      this.submit.focus();
+    if ( pattern.test(cvvValue) && cvvLength === 3 ) {
+      this.context.setFormInput( prevState => ({ ...prevState, cvv : cvvValue }) );
+      if(
+        this.context.formInput.submitEnabled === false &&
+        this.context.formInput.cardNumber !== null && 
+        this.context.formInput.expiryDate !== null &&
+        this.context.formInput.cardHolderName !== null
+      ){
+        this.context.setFormInput( prevState => ({ ...prevState, submitEnabled : true }) );
+      }
+    } else {
+      this.context.setFormInput( prevState => ({ ...prevState, submitEnabled : false }) );
     }
   }
-
   render() {
-    console.log(this.context);
+    console.log(this.context.formInput.submitEnabled);
     return (
       <>
         <div className="form">
@@ -58,7 +72,7 @@ export default class Form extends React.Component {
             <UpperForm />
             <div className="Form__enteries">
               <div className="Entry__group Expiry__Group">
-                <label className="uForm__label" HTMLfor="expiry">
+                <label className="uForm__label" htmlFor="expiry">
                   Expiry (MM/YY)
                 </label>
                 <input
@@ -83,7 +97,7 @@ export default class Form extends React.Component {
                 ></input>
               </div>
               <div className="Entry__group Cvv__group">
-                <label className="uForm__label" HTMLfor="cvv">
+                <label className="uForm__label" htmlFor="cvv">
                   CVV
                 </label>
                 <input
@@ -100,7 +114,7 @@ export default class Form extends React.Component {
                   onInput={e => {
                     this.cvvLen();
                   }}
-                  maxLength="4"
+                  maxLength="3"
                   placeholder="***"
                   required
                 ></input>
@@ -109,6 +123,9 @@ export default class Form extends React.Component {
             <input
               className="Form__submit"
               type="submit"
+              style = {{
+                backgroundColor : this.context.formInput.submitEnabled ? '#FB435C' : '#d3d3d3'
+              }}
               ref={input => {
                 this.submit = input;
               }}
@@ -118,7 +135,7 @@ export default class Form extends React.Component {
             ></input>
           </form>
         </div>
-        <style JSX>
+        <style jsx>
           {`
         .form__entry {
           display: flex;
@@ -150,14 +167,15 @@ export default class Form extends React.Component {
           background-image: url(./icons/lock.svg)
         }
         .Form__submit {
+          width: 150px;
           font-size: 10px;
           color: #ffffff;
-          padding-top: 10px;
-          padding-bottom: 10px;
-          background-color: lightgrey;
-          border-radius: 20px;
-          font-family: 'M-Bold';
-          width: 100px;
+          padding: 15px 40px;
+          border: none;
+          border-radius: 25px;
+          margin: 0 auto;
+          margin-top: 20px;
+          transition: all 0.3s ease-in;
         }
         .Form__submit:focus {
           outline:none;
