@@ -1,7 +1,9 @@
 import React from "react";
 import UpperForm from "../UpperForm/UpperForm";
+import { StoreContext } from "../../store";
 
 export default class Form extends React.Component {
+  static contextType = StoreContext;
   submitFunction(e) {
     e.preventDefault();
   }
@@ -9,15 +11,14 @@ export default class Form extends React.Component {
   expiryLen() {
     // updating focus once the expiry date length is reached
     // valid expiry between 05-20 to 12/29
-
     let expiryDate = document.getElementById("ccExpiry").value;
-
     let expiryLength = expiryDate.length;
     let pattern = RegExp(
       "^(((0[5-9])|(1[0-2]))/((20))|((0[1-9])|(1[0-2]))/(2[1-9]))$"
     );
     if (expiryLength === 5 && pattern.test(expiryDate)) {
       document.getElementById("ccExpiry").style.color = "black";
+      this.context.setFormInput( prevState => ({ ...prevState, expiryDate : expiryDate }) );
       this.cvv.focus();
     } else if (expiryLength === 5 && !pattern.test(expiryDate)) {
       document.getElementById("ccExpiry").style.color = "red";
@@ -43,6 +44,7 @@ export default class Form extends React.Component {
   }
 
   render() {
+    console.log(this.context);
     return (
       <>
         <div className="form">
@@ -68,6 +70,8 @@ export default class Form extends React.Component {
                   // onKeyUp={e => {
                   //   this.enterKey(e, "ccExpiry");
                   // }}
+                  onFocus={ () => this.context.setSelectedInput(this.context.inputNames.EXPIRYDATE) }
+                  onBlur={ () => this.context.setSelectedInput(this.context.inputNames.DEFAULT) }
                   id="ccExpiry"
                   name="ccExpiry"
                   onInput={e => {
@@ -116,10 +120,6 @@ export default class Form extends React.Component {
         </div>
         <style JSX>
           {`
-        @font-face {
-        font-family: "M-Bold";
-        src: url("../public/fonts/Muli-Bold.ttf");
-        }
         .form__entry {
           display: flex;
           flex-direction: column;

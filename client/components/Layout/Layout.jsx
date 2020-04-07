@@ -25,13 +25,6 @@ const Layout = () => (
                 border: 2px solid #707070;
                 border-radius: 25px;
             }
-            .content{
-                display:flex;
-                margin-top: 20px;
-            }
-            .credit{
-                width:
-            }
 
             @media (min-width: 768px){
                 .content{
@@ -46,6 +39,7 @@ const Layout = () => (
                     justify-content: center;
                     align-items: center;
                     width: 60%;
+                    padding-right: 30px;
                 }
 
                 .content__form{

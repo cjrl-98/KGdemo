@@ -44,7 +44,7 @@ export default function CreditCard () {
 
     return(
         <>
-            <article>
+            <article className="container">
                 <div className='credit'>
                     <img className='credit__visa' src='/icons/visa.svg' alt='visa logo'/>
                     <img className='credit__chip' src='/icons/credit-chip.svg' alt='credit card chip'/>
@@ -56,9 +56,13 @@ export default function CreditCard () {
                     <p className='credit__cardholder'>{formInput.cardHolderName}</p>
                     <motion.div animate={bioBorderControl} className="credit_selected-input"></motion.div>
                 </div>
+                <div className='credit credit--back'/>
             </article>
 
             <style jsx>{`
+                .container{
+                    position: relative;
+                }
                 .credit{
                     position: relative;
                     width: 266px;
@@ -127,6 +131,14 @@ export default function CreditCard () {
                     height: 178px;
                     border-radius: 15px;
                     border: 2px solid #ffffff;
+                }
+
+                .credit--back {
+                    z-index: -10;
+                    opacity: 0.5;
+                    position: absolute;
+                    top: 32px;
+                    left: 32px;
                 }
             `}</style>
         </>
