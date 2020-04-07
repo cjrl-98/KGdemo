@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { StoreContext } from "../../store";
 import { loadGetInitialProps } from "next/dist/next-server/lib/utils";
 
+// the design: https://xd.adobe.com/view/df6df630-4786-4eb5-44eb-4d5aaf9dc1f5-a95c/
 const UpperForm = () => {
   const { formInput, setFormInput, setSelectedInput } = useContext(StoreContext);
 
