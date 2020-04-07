@@ -1,4 +1,4 @@
-export default function Title() {
+export default function Nav() {
   return (
     <>
       <div className="nav">
@@ -28,24 +28,26 @@ export default function Title() {
           justify-content: space-between;
         }
         .nav {
-          width: 100%;
+          display: flex;
+          width: 80%;
+          height: 24px;
+          margin-bottom: 68px;
         }
         .nav__logo {
           display: flex;
           align-items: center;
           width: 100px;
+          margin-right: 50px;
+        }
+        .nav__figure {
+          margin-right: 5px; 
         }
         .nav ul {
           flex-grow:1;
         }
         .nav__section {
           list-style: none;
-        }
-        .nav__figure {
-          margin-right: 5px; 
-        }
-        
-        .nav__section {
+          font-size: 12px;
           width: calc(100% / 3);
           text-align: center;
           border-bottom: 2px solid #b8b8b8;

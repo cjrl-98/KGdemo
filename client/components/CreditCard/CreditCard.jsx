@@ -3,37 +3,42 @@ import { motion, useAnimation } from 'framer-motion';
 import { StoreContext } from '../../store';
 
 export default function CreditCard () {
-    const { selectedInput, formInput } = useContext(StoreContext);
+    const { selectedInput, formInput, inputNames } = useContext(StoreContext);
     const bioBorderControl = useAnimation();
-    const transition = { duration: 1, ease: [.26,.75,0,.99] };
-
-    const inputNames = {
-        'CARDNUMBER' : 'CARDNUMBER',
-        'EXPIRYDATE' : 'EXPIRYDATE',
-        'CARDHOLDERNAME' : 'CARDHOLDERNAME'
-    }
+    const transition = { duration: 0.5, ease: [.26,.75,0,.99] };
 
     useEffect(()=>{
-        if(selectedInput === inputNames.CARDNUMBER){bioBorderControl.start({ 
-            top: "93px",
-            left: "10px", 
-            width: "215px",
-            height: "28px", 
-            transition: transition 
+        if(selectedInput === inputNames.DEFAULT){
+            bioBorderControl.start({ 
+                top: "0px",
+                left: "0px", 
+                width: "266px",
+                height: "178px", 
+                transition: transition
         })}
-        if(selectedInput === inputNames.EXPIRYDATE){bioBorderControl.start({ 
-            top: "117px",
-            left: "12px", 
-            width: "72px",
-            height: "25px",
-            transition: transition 
+        if(selectedInput === inputNames.CARDNUMBER){
+            bioBorderControl.start({ 
+                top: "93px",
+                left: "10px", 
+                width: "215px",
+                height: "28px", 
+                transition: transition 
         })}
-        if(selectedInput === inputNames.CARDHOLDERNAME){bioBorderControl.start({ 
-            top: "138px",
-            left: "12px",
-            width: "230px",
-            height: "25px",
-            transition: transition 
+        if(selectedInput === inputNames.EXPIRYDATE){
+            bioBorderControl.start({ 
+                top: "117px",
+                left: "12px", 
+                width: "72px",
+                height: "25px",
+                transition: transition 
+        })}
+        if(selectedInput === inputNames.CARDHOLDERNAME){
+            bioBorderControl.start({ 
+                top: "138px",
+                left: "12px",
+                width: "230px",
+                height: "25px",
+                transition: transition 
         })}
     },[selectedInput])
 

@@ -2,13 +2,7 @@ import { useContext } from "react";
 import { StoreContext } from "../../store";
 
 const UpperForm = () => {
-  const { formInput, setFormInput, setSelectedInput } = useContext(StoreContext);
-
-  const inputNames = {
-    'CARDNUMBER' : 'CARDNUMBER',
-    'EXPIRYDATE' : 'EXPIRYDATE',
-    'CARDHOLDERNAME' : 'CARDHOLDERNAME'
-  }
+  const { formInput, setFormInput, setSelectedInput, inputNames } = useContext(StoreContext);
 
   const nameChange = e => {
     // either asign the value to a variable or use event.persist to allows us to access the event asynchronously
@@ -44,6 +38,7 @@ const UpperForm = () => {
         minlength="2"
         onChange={nameChange}
         onFocus={ () => setSelectedInput(inputNames.CARDHOLDERNAME) }
+        onBlur={ () => setSelectedInput(inputNames.DEFAULT) }
         required
       />
       {/* https://medium.com/free-code-camp/three-ways-to-title-case-a-sentence-in-javascript-676a9175eb27 */}
@@ -57,20 +52,22 @@ const UpperForm = () => {
         placeholder="**** **** **** ****"
         onChange={ccNumChange}
         onFocus={ () => setSelectedInput(inputNames.CARDNUMBER) }
+        onBlur={ () => setSelectedInput(inputNames.DEFAULT) }
         required
       />
     {/* since this is JSX styling, going to YOLO the css */}
     <style jsx>{`
       .uForm__label{
-        font-size:10px;
-        font-color:#494949;
+        font-size: 10px;
+        color: #707070;
         margin-bottom: 10px;
       }
 
       .uForm__input{
         box-sizing: border-box;
-        width: 100%;
+        width: 260px;
         height: 25px;
+        color: #707070;
         background: no-repeat;
         background-position: 3% center;
         border: none;

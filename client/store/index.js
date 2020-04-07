@@ -12,9 +12,16 @@ export const StoreProvider = (props) => {
         }
     );
 
+    const inputNames = {
+        'DEFAULT' : 'DEFAULT',
+        'CARDNUMBER' : 'CARDNUMBER',
+        'EXPIRYDATE' : 'EXPIRYDATE',
+        'CARDHOLDERNAME' : 'CARDHOLDERNAME'
+    }
+
     console.log(selectedInput);
     return(
-        <StoreContext.Provider value={{formInput, setFormInput, selectedInput, setSelectedInput}}>
+        <StoreContext.Provider value={{inputNames, formInput, setFormInput, selectedInput, setSelectedInput}}>
             {props.children}
         </StoreContext.Provider>
     );
