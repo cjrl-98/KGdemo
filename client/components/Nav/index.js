@@ -1,3 +1,3 @@
-import Title from "./Nav";
+import Nav from "./Nav";
 
 export default Title;

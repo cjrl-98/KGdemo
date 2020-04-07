@@ -19,11 +19,11 @@ const Layout = () => (
         <style jsx>{`
             .layout{
                 width: 100vw;
-                max-width: 800px;
                 height: 100%;
-                display:flex;
-                flex-direction: column;
-                align-items: center;
+                max-width: 800px;
+                padding: 40px 40px;
+                border: 2px solid #707070;
+                border-radius: 25px;
             }
             .content{
                 display:flex;
@@ -38,11 +38,13 @@ const Layout = () => (
                     display: flex;
                     justify-content: center;
                     width: 100%;
+                    margin-bottom: 60px;
                 }
 
                 .content__credit{
                     display: flex;
                     justify-content: center;
+                    align-items: center;
                     width: 60%;
                 }
 

@@ -176,7 +176,7 @@ export default class Form extends React.Component {
           margin-right: 50px;
         }
       `}
-        </style>
+        </style>      
       </>
     );
   }
