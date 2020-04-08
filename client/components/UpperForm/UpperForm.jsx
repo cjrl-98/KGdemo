@@ -43,6 +43,10 @@ const UpperForm = () => {
     }
   };
 
+  const ccNumBlur = e => {
+    setSelectedInput(inputNames.DEFAULT);
+  };
+
   return (
     <>
       <label className="uForm__label" htmlFor="name">Cardholder Name</label>
@@ -69,7 +73,7 @@ const UpperForm = () => {
         placeholder="**** **** **** ****"
         onChange={ccNumChange}
         onFocus={ () => setSelectedInput(inputNames.CARDNUMBER) }
-        onBlur={ () => setSelectedInput(inputNames.DEFAULT) }
+        onBlur={ ccNumBlur }
         required
       />
     {/* since this is JSX styling, going to YOLO the css */}
