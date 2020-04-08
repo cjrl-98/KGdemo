@@ -11,14 +11,14 @@ export default class Form extends React.Component {
   expiryLen(e) {
     // updating focus once the expiry date length is reached
     // valid expiry between 05-20 to 12/99
-    let expiryDate = document.getElementById("ccExpiry").value;
+    let expiryDate = e.target.value;
     let expiryLength = expiryDate.length;
     let pattern = RegExp(
       "^(((0[5-9])|(1[0-2]))/((20))|((0[1-9])|(1[0-2]))/([2][1-9]|[3-9][0-9]))$"
       // "^(((0[5-9])|(1[0-2]))/((20))|((0[1-9])|(1[0-2]))/(2[1-9]))$"
     );
     if (expiryLength === 5 && pattern.test(expiryDate)) {
-      document.getElementById("ccExpiry").style.color = "#707070";
+      this.ccExpiry.style.color = "#707070";
       this.context.setFormInput(prevState => ({
         ...prevState,
         expiryDate: expiryDate
@@ -36,9 +36,9 @@ export default class Form extends React.Component {
       }
       this.cvv.focus();
     } else if (expiryLength !== 5 && !pattern.test(expiryDate)) {
-      // blocks non numerical string
+      // blocks non numerical string with the exception of /
       e.target.value = e.target.value.replace(/^[^(0-9\/)]+$/, "");
-      document.getElementById("ccExpiry").style.color = "red";
+      this.ccExpiry.style.color = "red";
       this.context.setFormInput(prevState => ({
         ...prevState,
         submitEnabled: false
@@ -48,12 +48,8 @@ export default class Form extends React.Component {
 
   cvvLen(e) {
     // updating focus once the cvv length is reached
-    let cvvValue = document.getElementById("cvv").value;
-    let cvvLength = document.getElementById("cvv").value.length;
-    let checkNum1 = document
-      .getElementById("ccNumber")
-      .value.substring(0, 1)
-      .trim();
+    let cvvValue = e.target.value;
+    let cvvLength = cvvValue.length;
     let pattern = RegExp("^[1-9]([0-9]{2}$|[0-9]{3}$)");
     if (pattern.test(cvvValue) && cvvLength === 3) {
       this.context.setFormInput(prevState => ({ ...prevState, cvv: cvvValue }));
