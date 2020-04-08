@@ -1,6 +1,5 @@
 import React from "react";
 import UpperForm from "../UpperForm/UpperForm";
-import Title from "../Nav/Nav";
 
 export default class Form extends React.Component{
 
