@@ -10,7 +10,6 @@
   "dependencies": {
     "framer-motion": "^1.10.2",
     "next": "9.3.2",
-    "prettier": "^2.0.4",
     "react": "16.13.1",
     "react-credit-card-input": "^1.1.5",
     "react-dom": "16.13.1",

@@ -8,33 +8,45 @@ export default class Form extends React.Component {
     e.preventDefault();
   }
 
-  expiryLen() {
+  expiryLen(e) {
     // updating focus once the expiry date length is reached
-    // valid expiry between 05-20 to 12/29
+    // valid expiry between 05-20 to 12/99
     let expiryDate = document.getElementById("ccExpiry").value;
     let expiryLength = expiryDate.length;
     let pattern = RegExp(
-      "^(((0[5-9])|(1[0-2]))/((20))|((0[1-9])|(1[0-2]))/(2[1-9]))$"
+      "^(((0[5-9])|(1[0-2]))/((20))|((0[1-9])|(1[0-2]))/([2][1-9]|[3-9][0-9]))$"
+      // "^(((0[5-9])|(1[0-2]))/((20))|((0[1-9])|(1[0-2]))/(2[1-9]))$"
     );
     if (expiryLength === 5 && pattern.test(expiryDate)) {
-      document.getElementById("ccExpiry").style.color = "black";
-      this.context.setFormInput( prevState => ({ ...prevState, expiryDate : expiryDate }) );
-      if(
+      document.getElementById("ccExpiry").style.color = "#707070";
+      this.context.setFormInput(prevState => ({
+        ...prevState,
+        expiryDate: expiryDate
+      }));
+      if (
         this.context.formInput.submitEnabled === false &&
-        this.context.formInput.cardNumber !== null && 
+        this.context.formInput.cardNumber !== null &&
         this.context.formInput.cardHolderName !== null &&
         this.context.formInput.cvv !== null
-      ){
-        this.context.setFormInput( prevState => ({ ...prevState, submitEnabled : true }) );
+      ) {
+        this.context.setFormInput(prevState => ({
+          ...prevState,
+          submitEnabled: true
+        }));
       }
       this.cvv.focus();
     } else if (expiryLength !== 5 && !pattern.test(expiryDate)) {
+      // blocks non numerical string
+      e.target.value = e.target.value.replace(/^[^(0-9\/)]+$/, "");
       document.getElementById("ccExpiry").style.color = "red";
-      this.context.setFormInput( prevState => ({ ...prevState, submitEnabled : false }) );
+      this.context.setFormInput(prevState => ({
+        ...prevState,
+        submitEnabled: false
+      }));
     }
   }
 
-  cvvLen() {
+  cvvLen(e) {
     // updating focus once the cvv length is reached
     let cvvValue = document.getElementById("cvv").value;
     let cvvLength = document.getElementById("cvv").value.length;
@@ -43,18 +55,26 @@ export default class Form extends React.Component {
       .value.substring(0, 1)
       .trim();
     let pattern = RegExp("^[1-9]([0-9]{2}$|[0-9]{3}$)");
-    if ( pattern.test(cvvValue) && cvvLength === 3 ) {
-      this.context.setFormInput( prevState => ({ ...prevState, cvv : cvvValue }) );
-      if(
+    if (pattern.test(cvvValue) && cvvLength === 3) {
+      this.context.setFormInput(prevState => ({ ...prevState, cvv: cvvValue }));
+      if (
         this.context.formInput.submitEnabled === false &&
-        this.context.formInput.cardNumber !== null && 
+        this.context.formInput.cardNumber !== null &&
         this.context.formInput.expiryDate !== null &&
         this.context.formInput.cardHolderName !== null
-      ){
-        this.context.setFormInput( prevState => ({ ...prevState, submitEnabled : true }) );
+      ) {
+        this.context.setFormInput(prevState => ({
+          ...prevState,
+          submitEnabled: true
+        }));
       }
     } else {
-      this.context.setFormInput( prevState => ({ ...prevState, submitEnabled : false }) );
+      // blocks non numerical string
+      e.target.value = e.target.value.replace(/^[^(0-9)]+$/, "");
+      this.context.setFormInput(prevState => ({
+        ...prevState,
+        submitEnabled: false
+      }));
     }
   }
   render() {
@@ -83,12 +103,20 @@ export default class Form extends React.Component {
                   // onKeyUp={e => {
                   //   this.enterKey(e, "ccExpiry");
                   // }}
-                  onFocus={ () => this.context.setSelectedInput(this.context.inputNames.EXPIRYDATE) }
-                  onBlur={ () => this.context.setSelectedInput(this.context.inputNames.DEFAULT) }
+                  onFocus={() =>
+                    this.context.setSelectedInput(
+                      this.context.inputNames.EXPIRYDATE
+                    )
+                  }
+                  onBlur={() =>
+                    this.context.setSelectedInput(
+                      this.context.inputNames.DEFAULT
+                    )
+                  }
                   id="ccExpiry"
                   name="ccExpiry"
                   onInput={e => {
-                    this.expiryLen();
+                    this.expiryLen(e);
                   }}
                   maxLength="5"
                   placeholder="**/**"
@@ -111,7 +139,7 @@ export default class Form extends React.Component {
                   id="cvv"
                   name="cvv"
                   onInput={e => {
-                    this.cvvLen();
+                    this.cvvLen(e);
                   }}
                   maxLength="3"
                   placeholder="***"
@@ -122,8 +150,10 @@ export default class Form extends React.Component {
             <input
               className="Form__submit"
               type="submit"
-              style = {{
-                backgroundColor : this.context.formInput.submitEnabled ? '#FB435C' : '#d3d3d3'
+              style={{
+                backgroundColor: this.context.formInput.submitEnabled
+                  ? "#FB435C"
+                  : "#d3d3d3"
               }}
               ref={input => {
                 this.submit = input;
@@ -136,64 +166,74 @@ export default class Form extends React.Component {
         </div>
         <style jsx>
           {`
-        .form__entry {
-          display: flex;
-          flex-direction: column;
-        }
-        .uForm__label{
-          font-size:10px;
-          font-color:#494949;
-          margin-bottom: 10px;
-        }
-        .uForm__input {
-          box-sizing: border-box;
-          width: 100%;
-          height: 25px;
-          background: no-repeat;
-          background-position: 3% center;
-          border: none;
-          border-bottom: 2px solid #b8b8b8;
-          padding: 5px 5px 5px 15%;
-          margin-bottom: 20px;
-        }
-        .uForm__input:focus {
-          outline:none;
-        }
-        .expiry_input {
-          background-image: url(./icons/calendar-alt-regular.svg)
-        }
-        .cvv_input {
-          background-image: url(./icons/lock.svg)
-        }
-        .Form__submit {
-          width: 150px;
-          font-size: 10px;
-          color: #ffffff;
-          padding: 15px 40px;
-          border: none;
-          border-radius: 25px;
-          margin: 0 auto;
-          margin-top: 20px;
-          transition: all 0.3s ease-in;
-        }
-        .Form__submit:focus {
-          outline:none;
-          background-color: grey;
-        }
-        .Form__enteries {
-          display: flex;
-          justify-content: flex-end;
-        }
-        .Entry__group {
-          display: flex;
-          flex-direction: column;
-          align-items: left;
-        }
-        .Expiry__Group {
-          margin-right: 50px;
-        }
-      `}
-        </style>      
+            .form {
+              font-family: "Muli";
+            }
+            .form__entry {
+              display: flex;
+              flex-direction: column;
+            }
+            .uForm__label {
+              font-size: 10px;
+              font-color: #494949;
+              margin-bottom: 10px;
+            }
+            .uForm__input {
+              box-sizing: border-box;
+              width: 100%;
+              height: 25px;
+              background: no-repeat;
+              background-position: 3% center;
+              border: none;
+              border-bottom: 2px solid #b8b8b8;
+              padding: 5px 5px 5px 25%;
+              margin-bottom: 20px;
+              color: #707070;
+              font-family: "Muli";
+            }
+            .uForm__input:focus {
+              outline: none;
+            }
+            .expiry_input {
+              background-image: url(./icons/calendar-alt-regular.svg);
+            }
+            .cvv_input {
+              background-image: url(./icons/lock.svg);
+              margin-right: 10%;
+            }
+            .Form__submit {
+              width: 150px;
+              font-size: 10px;
+              color: #ffffff;
+              padding: 15px 40px;
+              border: none;
+              border-radius: 25px;
+              margin: 0 auto;
+              margin-top: 30px;
+              transition: all 0.3s ease-in;
+            }
+            .Form__submit:focus {
+              outline: none;
+              background-color: grey;
+            }
+            .Form__enteries {
+              display: flex;
+              justify-content: flex-end;
+              box-sizing: border-box;
+              width: 260px;
+              height: 25px;
+              margin-bottom: 20px;
+            }
+            .Entry__group {
+              display: flex;
+              flex-direction: column;
+              align-items: left;
+            }
+            .Expiry__Group {
+              margin-right: 20%;
+            }
+          `}
+        </style>
       </>
     );
   }
