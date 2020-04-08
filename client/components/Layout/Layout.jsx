@@ -1,10 +1,12 @@
 import CreditCard from "../CreditCard";
 import Form from "../Form";
 import Title from "../Nav/Nav";
+import Modal from '../Modal/Modal';
 
 const Layout = () => (
     <>
         <main className="layout">
+            <Modal/>
             <Title/>
             <div className="content">
                 <section className="content__credit">
@@ -19,18 +21,11 @@ const Layout = () => (
         <style jsx>{`
             .layout{
                 width: 100vw;
-                max-width: 800px;
                 height: 100%;
-                display:flex;
-                flex-direction: column;
-                align-items: center;
-            }
-            .content{
-                display:flex;
-                margin-top: 20px;
-            }
-            .credit{
-                width:
+                max-width: 800px;
+                padding: 40px 40px;
+                border: 2px solid #707070;
+                border-radius: 25px;
             }
 
             @media (min-width: 768px){
@@ -38,12 +33,15 @@ const Layout = () => (
                     display: flex;
                     justify-content: center;
                     width: 100%;
+                    margin-bottom: 60px;
                 }
 
                 .content__credit{
                     display: flex;
                     justify-content: center;
+                    align-items: center;
                     width: 60%;
+                    padding-right: 30px;
                 }
 
                 .content__form{

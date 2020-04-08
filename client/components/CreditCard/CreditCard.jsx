@@ -3,57 +3,66 @@ import { motion, useAnimation } from 'framer-motion';
 import { StoreContext } from '../../store';
 
 export default function CreditCard () {
-    const { selectedInput, formInput } = useContext(StoreContext);
+    const { selectedInput, formInput, inputNames } = useContext(StoreContext);
     const bioBorderControl = useAnimation();
-    const transition = { duration: 1, ease: [.26,.75,0,.99] };
-
-    const inputNames = {
-        'CARDNUMBER' : 'CARDNUMBER',
-        'EXPIRYDATE' : 'EXPIRYDATE',
-        'CARDHOLDERNAME' : 'CARDHOLDERNAME'
-    }
+    const transition = { duration: 0.5, ease: [.26,.75,0,.99] };
 
     useEffect(()=>{
-        if(selectedInput === inputNames.CARDNUMBER){bioBorderControl.start({ 
-            top: "93px",
-            left: "10px", 
-            width: "215px",
-            height: "28px", 
-            transition: transition 
+        if(selectedInput === inputNames.DEFAULT){
+            bioBorderControl.start({ 
+                top: "0px",
+                left: "0px", 
+                width: "266px",
+                height: "178px", 
+                transition: transition
         })}
-        if(selectedInput === inputNames.EXPIRYDATE){bioBorderControl.start({ 
-            top: "117px",
-            left: "12px", 
-            width: "72px",
-            height: "25px",
-            transition: transition 
+        if(selectedInput === inputNames.CARDNUMBER){
+            bioBorderControl.start({ 
+                top: "93px",
+                left: "10px", 
+                width: "215px",
+                height: "28px", 
+                transition: transition 
         })}
-        if(selectedInput === inputNames.CARDHOLDERNAME){bioBorderControl.start({ 
-            top: "138px",
-            left: "12px",
-            width: "230px",
-            height: "25px",
-            transition: transition 
+        if(selectedInput === inputNames.EXPIRYDATE){
+            bioBorderControl.start({ 
+                top: "117px",
+                left: "12px", 
+                width: "72px",
+                height: "25px",
+                transition: transition 
+        })}
+        if(selectedInput === inputNames.CARDHOLDERNAME){
+            bioBorderControl.start({ 
+                top: "138px",
+                left: "12px",
+                width: "230px",
+                height: "25px",
+                transition: transition 
         })}
     },[selectedInput])
 
     return(
         <>
-            <article>
+            <article className="container">
                 <div className='credit'>
                     <img className='credit__visa' src='/icons/visa.svg' alt='visa logo'/>
                     <img className='credit__chip' src='/icons/credit-chip.svg' alt='credit card chip'/>
-                    <p className='credit__number'>{formInput.cardNumber}</p>
+                    <p className='credit__number'>{ formInput.cardNumber ? formInput.cardNumber : '0000 0000 0000 0000' }</p>
                     <div className='credit__date'>
                         <p className='credit__valid-label'>VALID THRU</p>
-                        <p className='credit__valid'>{formInput.expiryDate}</p>
+                        <p className='credit__valid'>{ formInput.expiryDate ? formInput.expiryDate : '05/20' }</p>
                     </div>
-                    <p className='credit__cardholder'>{formInput.cardHolderName}</p>
+                    <p className='credit__cardholder'>{formInput.cardHolderName ? formInput.cardHolderName : 'Christian Lagasca'}</p>
                     <motion.div animate={bioBorderControl} className="credit_selected-input"></motion.div>
                 </div>
+                <div className='credit credit--back'/>
             </article>
 
             <style jsx>{`
+                .container{
+                    position: relative;
+                }
                 .credit{
                     position: relative;
                     width: 266px;
@@ -122,6 +131,14 @@ export default function CreditCard () {
                     height: 178px;
                     border-radius: 15px;
                     border: 2px solid #ffffff;
+                }
+
+                .credit--back {
+                    z-index: -10;
+                    opacity: 0.5;
+                    position: absolute;
+                    top: 32px;
+                    left: 32px;
                 }
             `}</style>
         </>

@@ -2,6 +2,7 @@ import Head from 'next/head'
 import {StoreProvider} from '../store';
 import Layout from '../components/Layout';
 
+
 const Home = () => (
   <>
     <Head>
@@ -27,6 +28,8 @@ const Home = () => (
     `}</style>
 
     <style jsx global>{`
+      @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;500;700&display=swap')
+
       @font-face {
         font-family: 'Muli'
         font-style: normal;
@@ -55,7 +58,7 @@ const Home = () => (
       body {
         padding: 0;
         margin: 0;
-        font-family: 'Muli';
+        font-family: 'Muli', 'Montserrat';
         color: #848484;
       }
 

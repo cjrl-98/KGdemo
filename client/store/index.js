@@ -6,15 +6,26 @@ export const StoreProvider = (props) => {
     const [selectedInput, setSelectedInput] = useState('');
     const [formInput, setFormInput] = useState(
         {   
-            "cardNumber" : '0000 0000 0000 0000',
-            "expiryDate" : '09/20',
-            "cardHolderName" : 'Christian Lagasca'
+            'submitEnabled' : false,
+            "cardNumber" : null,
+            "expiryDate" : null,
+            "cardHolderName" : null,
+            "cvv" : null
         }
     );
 
-    console.log(selectedInput);
+    const inputNames = {
+        'DEFAULT' : 'DEFAULT',
+        'CARDNUMBER' : 'CARDNUMBER',
+        'EXPIRYDATE' : 'EXPIRYDATE',
+        'CARDHOLDERNAME' : 'CARDHOLDERNAME',
+        'CVV' : 'CVV'
+    }
+
+    const [modalOpen, setModalOpen] = useState(false)
+    
     return(
-        <StoreContext.Provider value={{formInput, setFormInput, selectedInput, setSelectedInput}}>
+        <StoreContext.Provider value={{inputNames, formInput, setFormInput, selectedInput, setSelectedInput, modalOpen, setModalOpen}}>
             {props.children}
         </StoreContext.Provider>
     );

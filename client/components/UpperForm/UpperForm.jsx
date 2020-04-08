@@ -1,22 +1,24 @@
 import { useContext } from "react";
 import { StoreContext } from "../../store";
-import { loadGetInitialProps } from "next/dist/next-server/lib/utils";
 
 // the design: https://xd.adobe.com/view/df6df630-4786-4eb5-44eb-4d5aaf9dc1f5-a95c/
 const UpperForm = () => {
-  const { formInput, setFormInput, setSelectedInput } = useContext(StoreContext);
-
-  const inputNames = {
-    'CARDNUMBER' : 'CARDNUMBER',
-    'EXPIRYDATE' : 'EXPIRYDATE',
-    'CARDHOLDERNAME' : 'CARDHOLDERNAME'
-  }
+  const { formInput, setFormInput, setSelectedInput, inputNames } = useContext(StoreContext);
 
   const nameChange = e => {
     // either asign the value to a variable or use event.persist to allows us to access the event asynchronously
+    // https://medium.com/trabe/react-syntheticevent-reuse-889cd52981b6
     const value = e.target.value;
     // use prevState to update only a key value pair
     setFormInput( prevState => ({ ...prevState, cardHolderName : value }) );
+    if(
+      formInput.submitEnabled === false &&
+      formInput.cardNumber !== null && 
+      formInput.expiryDate !== null &&
+      formInput.cvv !== null
+  ){
+      setFormInput( prevState => ({ ...prevState, submitEnabled : true }) );
+  }
   };
 
   const ccNumChange = e => {
@@ -32,25 +34,38 @@ const UpperForm = () => {
     const value = e.target.value;
     // use prevState to update only a key value pair
     setFormInput( prevState => ({ ...prevState, cardNumber : value }) );
+    if(
+      formInput.submitEnabled === false &&
+      formInput.expiryDate !== null &&
+      formInput.cardHolderName !== null &&
+      formInput.cvv !== null
+    ){
+        setFormInput( prevState => ({ ...prevState, submitEnabled : true }) );
+    }
+  };
+
+  const ccNumBlur = e => {
+    setSelectedInput(inputNames.DEFAULT);
   };
 
   return (
     <>
-      <label className="uForm__label" HTMLfor="name">Cardholder Name</label>
+      <label className="uForm__label" htmlFor="name">Cardholder Name</label>
       <input
         className="uForm__input"
         type="text"
         id="name"
         name="name"
         placeholder="Name on Card"
-        minlength="2"
+        minLength="2"
         onChange={nameChange}
         onFocus={ () => setSelectedInput(inputNames.CARDHOLDERNAME) }
+        onBlur={ () => setSelectedInput(inputNames.DEFAULT) }
         required
       />
       {/* https://medium.com/free-code-camp/three-ways-to-title-case-a-sentence-in-javascript-676a9175eb27 */}
 
-      <label className="uForm__label" HTMLfor="ccNumber">Card Number</label>
+      <label className="uForm__label" htmlFor="ccNumber">Card Number</label>
       <input
         className="uForm__input"
         type="text"
@@ -59,6 +74,7 @@ const UpperForm = () => {
         placeholder="**** **** **** ****"
         onChange={ccNumChange}
         onFocus={ () => setSelectedInput(inputNames.CARDNUMBER) }
+        onBlur={ ccNumBlur }
         required
       />
       <div className="uForm__err">
@@ -69,15 +85,16 @@ const UpperForm = () => {
     {/* since this is JSX styling, going to YOLO the css */}
     <style jsx>{`
       .uForm__label{
-        font-size:10px;
-        font-color:#494949;
+        font-size: 10px;
+        color: #707070;
         margin-bottom: 10px;
       }
 
       .uForm__input{
         box-sizing: border-box;
-        width: 100%;
+        width: 260px;
         height: 25px;
+        color: #707070;
         background: no-repeat;
         background-position: 3% center;
         border: none;
