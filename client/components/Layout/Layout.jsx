@@ -1,10 +1,12 @@
 import CreditCard from "../CreditCard";
 import Form from "../Form";
 import Title from "../Nav/Nav";
+import Modal from '../Modal/Modal';
 
 const Layout = () => (
     <>
         <main className="layout">
+            <Modal/>
             <Title/>
             <div className="content">
                 <section className="content__credit">

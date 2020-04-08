@@ -21,9 +21,11 @@ export const StoreProvider = (props) => {
         'CARDHOLDERNAME' : 'CARDHOLDERNAME',
         'CVV' : 'CVV'
     }
+
+    const [modalOpen, setModalOpen] = useState(false)
     
     return(
-        <StoreContext.Provider value={{inputNames, formInput, setFormInput, selectedInput, setSelectedInput}}>
+        <StoreContext.Provider value={{inputNames, formInput, setFormInput, selectedInput, setSelectedInput, modalOpen, setModalOpen}}>
             {props.children}
         </StoreContext.Provider>
     );

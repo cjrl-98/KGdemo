@@ -2,6 +2,7 @@ import Head from 'next/head'
 import {StoreProvider} from '../store';
 import Layout from '../components/Layout';
 
+
 const Home = () => (
   <>
     <Head>

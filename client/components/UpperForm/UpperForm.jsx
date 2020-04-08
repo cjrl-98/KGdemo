@@ -6,6 +6,7 @@ const UpperForm = () => {
 
   const nameChange = e => {
     // either asign the value to a variable or use event.persist to allows us to access the event asynchronously
+    // https://medium.com/trabe/react-syntheticevent-reuse-889cd52981b6
     const value = e.target.value;
     // use prevState to update only a key value pair
     setFormInput( prevState => ({ ...prevState, cardHolderName : value }) );

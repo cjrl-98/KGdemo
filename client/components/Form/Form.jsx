@@ -6,6 +6,9 @@ export default class Form extends React.Component {
   static contextType = StoreContext;
   submitFunction(e) {
     e.preventDefault();
+    console.log('what is it doing?')
+    this.context.setModalOpen(!this.context.modalOpen);
+    // because this is class, this.context is necessary, unlike in UpperForm.jsx
   }
 
   expiryLen(e) {
