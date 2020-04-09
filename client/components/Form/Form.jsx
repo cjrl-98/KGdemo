@@ -22,6 +22,7 @@ export default class Form extends React.Component {
     );
     if (expiryLength === 5 && pattern.test(expiryDate)) {
       this.ccExpiry.style.color = "#707070";
+      // Note: this color is based on the ID, overrides the css style
       this.context.setFormInput(prevState => ({
         ...prevState,
         expiryDate: expiryDate
@@ -48,7 +49,7 @@ export default class Form extends React.Component {
       }));
     }
   }
-
+  
   cvvLen(e) {
     // updating focus once the cvv length is reached
     let cvvValue = e.target.value;
@@ -113,7 +114,7 @@ export default class Form extends React.Component {
                     )
                   }
                   id="ccExpiry"
-                  name="ccExpiry"
+                  name="expiry"
                   onInput={e => {
                     this.expiryLen(e);
                   }}

@@ -1,9 +1,11 @@
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import { StoreContext } from "../../store";
 
 // the design: https://xd.adobe.com/view/df6df630-4786-4eb5-44eb-4d5aaf9dc1f5-a95c/
 const UpperForm = () => {
   const { formInput, setFormInput, setSelectedInput, inputNames } = useContext(StoreContext);
+  const ccErr = useRef(null);
+  const nameErr = useRef(null);
 
   const nameChange = e => {
     // either asign the value to a variable or use event.persist to allows us to access the event asynchronously
@@ -44,8 +46,31 @@ const UpperForm = () => {
     }
   };
 
+  const nameBlur = e => {
+    setSelectedInput(inputNames.DEFAULT);
+    // Cannot do this: nameErr.setAttribute("hidden", false)
+    let nameVal = /^.{2,}$/g.test(e.target.value);
+    
+    if(!nameVal) {
+      nameErr.current.hidden = false;
+    }
+    if(!nameErr.current.hidden && nameVal) {
+      nameErr.current.hidden = true;
+    }
+  }
+
   const ccNumBlur = e => {
     setSelectedInput(inputNames.DEFAULT);
+    // Cannot do this: ccErr.setAttribute("hidden", false)
+    let cc = e.target.value.replace(/\s/g, "");
+    let ccVal = /4[0-9]{12}(?:[0-9]{3})/g.test(cc);
+    
+    if(!ccVal) {
+      ccErr.current.hidden = false;
+    }
+    if(!ccErr.current.hidden && ccVal ) {
+      ccErr.current.hidden = true;
+    }
   };
 
   return (
@@ -57,14 +82,15 @@ const UpperForm = () => {
         id="name"
         name="name"
         placeholder="Name on Card"
-        minLength="2"
         onChange={nameChange}
         onFocus={ () => setSelectedInput(inputNames.CARDHOLDERNAME) }
-        onBlur={ () => setSelectedInput(inputNames.DEFAULT) }
+        onBlur={ nameBlur }
         required
       />
-      {/* https://medium.com/free-code-camp/three-ways-to-title-case-a-sentence-in-javascript-676a9175eb27 */}
-
+      <div className="uForm__err">
+        <p className="uForm__msg" ref={nameErr} hidden>Please enter the cardholder name</p>
+      </div>
+      
       <label className="uForm__label" htmlFor="ccNumber">Card Number</label>
       <input
         className="uForm__input"
@@ -78,9 +104,7 @@ const UpperForm = () => {
         required
       />
       <div className="uForm__err">
-        {/* <p className="uForm__msg">{props}</p> */}
-        <p className="uForm__msg">test</p>
-        {/* how to implement the message? */}
+        <p className="uForm__msg" ref={ccErr} hidden>Please enter a valid VISA card number</p>
       </div>
     {/* since this is JSX styling, going to YOLO the css */}
     <style jsx>{`
@@ -105,7 +129,6 @@ const UpperForm = () => {
         outline:none;
       }
       input[type=text]:first-of-type {
-        margin-bottom: 20px;
         background-image: url(./icons/user-check-solid.svg);
       }
       input[type=text]:nth-of-type(2) {
@@ -114,7 +137,7 @@ const UpperForm = () => {
       .uForm__err {
         display:flex;
         align-items: center;
-        height: 20px;
+        height: 25px;
       }
       .uForm__msg {
         font-size:12px;
