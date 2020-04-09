@@ -208,9 +208,6 @@ export default class Form extends React.Component {
         </div>
         <style jsx>
           {`
-            .form {
-              font-family: "Muli";
-            }
             .form__entry {
               display: flex;
               flex-direction: column;
