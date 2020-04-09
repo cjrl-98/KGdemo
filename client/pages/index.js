@@ -8,6 +8,7 @@ const Home = () => (
     <Head>
       <title>KGdemo</title>
       <link rel="icon" href="./icons/kg.svg" />
+      <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;500;700&display=swap" rel="stylesheet"></link>
     </Head>
     
     <div className="container">
@@ -28,37 +29,11 @@ const Home = () => (
     `}</style>
 
     <style jsx global>{`
-      @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;500;700&display=swap')
-
-      @font-face {
-        font-family: 'Muli';
-        font-style: normal;
-        font-weight: 100;
-        src: url('../public/fonts/Muli-Light.ttf');
-      }
-      @font-face {
-        font-family: 'Muli';
-        font-style: normal;
-        font-weight: 300;
-        src: url('../public/fonts/Muli-Regular.ttf');
-      }
-      @font-face {
-        font-family: 'Muli';
-        font-style: normal;
-        font-weight: 500;
-        src: url('../public/fonts/Muli-Medium.ttf');
-      }
-      @font-face {
-        font-family: 'Muli';
-        font-style: normal;
-        font-weight: 700;
-        src: url('../public/fonts/Muli-Bold.ttf');
-      }
       html,
       body {
         padding: 0;
         margin: 0;
-        font-family: 'Muli', 'Montserrat';
+        font-family: 'Montserrat';
         color: #848484;
       }
 

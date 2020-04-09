@@ -18,9 +18,9 @@ export default function CreditCard () {
         })}
         if(selectedInput === inputNames.CARDNUMBER){
             bioBorderControl.start({ 
-                top: "93px",
+                top: "91px",
                 left: "10px", 
-                width: "215px",
+                width: "220px",
                 height: "28px", 
                 transition: transition 
         })}
