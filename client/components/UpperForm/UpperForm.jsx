@@ -46,32 +46,28 @@ const UpperForm = () => {
     }
   };
 
-  const nameBlur = e => {
+  const blurHandler = e => {
     setSelectedInput(inputNames.DEFAULT);
-    // Cannot do this: nameErr.setAttribute("hidden", false)
-    let nameVal = /^.{2,}$/g.test(e.target.value);
-    
-    if(!nameVal) {
-      nameErr.current.hidden = false;
-    }
-    if(!nameErr.current.hidden && nameVal) {
-      nameErr.current.hidden = true;
+    // Yolo, trying out switch cases 
+    switch (e.target.name) {
+      case "name":
+        let nameVal = /^.{2,}$/g.test(e.target.value);
+        // if input is blank, unhide the err message
+        if(!nameVal) nameErr.current.hidden = false;
+        // if input is filled and message is displayed, hide the err message
+        if(!nameErr.current.hidden && nameVal) nameErr.current.hidden = true;
+        break;
+        // without, it'll continue executing each statement in the following cases
+
+      case "ccNumber":
+        let cc = e.target.value.replace(/\s/g, "");
+        let ccVal = /4[0-9]{12}(?:[0-9]{3})/g.test(cc);
+        if(!ccVal) ccErr.current.hidden = false;
+        // Note: Cannot do this: ccErr.setAttribute("hidden", false)
+        if(!ccErr.current.hidden && ccVal ) ccErr.current.hidden = true;
+        break;
     }
   }
-
-  const ccNumBlur = e => {
-    setSelectedInput(inputNames.DEFAULT);
-    // Cannot do this: ccErr.setAttribute("hidden", false)
-    let cc = e.target.value.replace(/\s/g, "");
-    let ccVal = /4[0-9]{12}(?:[0-9]{3})/g.test(cc);
-    
-    if(!ccVal) {
-      ccErr.current.hidden = false;
-    }
-    if(!ccErr.current.hidden && ccVal ) {
-      ccErr.current.hidden = true;
-    }
-  };
 
   return (
     <>
@@ -84,7 +80,7 @@ const UpperForm = () => {
         placeholder="Name on Card"
         onChange={nameChange}
         onFocus={ () => setSelectedInput(inputNames.CARDHOLDERNAME) }
-        onBlur={ nameBlur }
+        onBlur={ blurHandler }
         required
       />
       <div className="uForm__err">
@@ -100,7 +96,7 @@ const UpperForm = () => {
         placeholder="**** **** **** ****"
         onChange={ccNumChange}
         onFocus={ () => setSelectedInput(inputNames.CARDNUMBER) }
-        onBlur={ ccNumBlur }
+        onBlur={ blurHandler }
         required
       />
       <div className="uForm__err">

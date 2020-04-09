@@ -6,11 +6,11 @@ export default class Form extends React.Component {
   static contextType = StoreContext;
   submitFunction(e) {
     e.preventDefault();
-    console.log('what is it doing?')
+    console.log("what is it doing?");
     this.context.setModalOpen(!this.context.modalOpen);
     // because this is class, this.context is necessary, unlike in UpperForm.jsx
   }
- 
+
   expiryLen(e) {
     // updating focus once the expiry date length is reached
     // valid expiry between 05-20 to 12/99
@@ -23,9 +23,9 @@ export default class Form extends React.Component {
     if (expiryLength === 5 && pattern.test(expiryDate)) {
       this.ccExpiry.style.color = "#707070";
       // Note: this color is based on the ID, overrides the css style
-      this.context.setFormInput(prevState => ({
+      this.context.setFormInput((prevState) => ({
         ...prevState,
-        expiryDate: expiryDate
+        expiryDate: expiryDate,
       }));
       if (
         this.context.formInput.submitEnabled === false &&
@@ -33,9 +33,9 @@ export default class Form extends React.Component {
         this.context.formInput.cardHolderName !== null &&
         this.context.formInput.cvv !== null
       ) {
-        this.context.setFormInput(prevState => ({
+        this.context.setFormInput((prevState) => ({
           ...prevState,
-          submitEnabled: true
+          submitEnabled: true,
         }));
       }
       this.cvv.focus();
@@ -43,38 +43,65 @@ export default class Form extends React.Component {
       // blocks non numerical string with the exception of /
       e.target.value = e.target.value.replace(/^[^(0-9\/)]+$/, "");
       this.ccExpiry.style.color = "red";
-      this.context.setFormInput(prevState => ({
+      this.context.setFormInput((prevState) => ({
         ...prevState,
-        submitEnabled: false
+        submitEnabled: false,
       }));
     }
   }
-  
+
   cvvLen(e) {
     // updating focus once the cvv length is reached
     let cvvValue = e.target.value;
     let cvvLength = cvvValue.length;
     let pattern = RegExp("^[1-9]([0-9]{2}$|[0-9]{3}$)");
     if (pattern.test(cvvValue) && cvvLength === 3) {
-      this.context.setFormInput(prevState => ({ ...prevState, cvv: cvvValue }));
+      this.context.setFormInput((prevState) => ({
+        ...prevState,
+        cvv: cvvValue,
+      }));
       if (
         this.context.formInput.submitEnabled === false &&
         this.context.formInput.cardNumber !== null &&
         this.context.formInput.expiryDate !== null &&
         this.context.formInput.cardHolderName !== null
       ) {
-        this.context.setFormInput(prevState => ({
+        this.context.setFormInput((prevState) => ({
           ...prevState,
-          submitEnabled: true
+          submitEnabled: true,
         }));
       }
     } else {
       // blocks non numerical string
       e.target.value = e.target.value.replace(/^[^(0-9)]+$/, "");
-      this.context.setFormInput(prevState => ({
+      this.context.setFormInput((prevState) => ({
         ...prevState,
-        submitEnabled: false
+        submitEnabled: false,
       }));
+    }
+  }
+
+  blurHandler(e) {
+    switch (e.target.name) {
+      case "expiry":
+        () => { this.context.setSelectedInput(this.context.inputNames.DEFAULT) };
+        let pattern = RegExp("^(((0[5-9])|(1[0-2]))\/((20))|((0[1-9])|(1[0-2]))/([2][1-9]|[3-9][0-9]))$");
+        let expVal = pattern.test(e.target.value);
+        // if input is blank and doesn't pass the regex, unhide the err message
+        if(e.target.value.length === 0 || !expVal) {
+          expErr.hidden = false
+          return
+        }
+        expErr.hidden = true;
+        break;
+        
+      case "cvv": 
+      if(e.target.value.length === 0) {
+        cvvErr.hidden = false
+        return
+      }
+      cvvErr.hidden = true;
+      break;
     }
   }
   render() {
@@ -84,7 +111,7 @@ export default class Form extends React.Component {
           <h1 className="form__title">Payment Details</h1>
           <form
             className="form__entry"
-            onSubmit={e => {
+            onSubmit={(e) => {
               this.submitFunction(e);
             }}
           >
@@ -97,7 +124,7 @@ export default class Form extends React.Component {
                 <input
                   className="uForm__input expiry_input"
                   type="text"
-                  ref={input => {
+                  ref={(input) => {
                     this.ccExpiry = input;
                   }}
                   // onKeyUp={e => {
@@ -108,29 +135,34 @@ export default class Form extends React.Component {
                       this.context.inputNames.EXPIRYDATE
                     )
                   }
-                  onBlur={() =>
-                    this.context.setSelectedInput(
-                      this.context.inputNames.DEFAULT
-                    )
-                  }
+                  onBlur={ this.blurHandler }
                   id="ccExpiry"
                   name="expiry"
-                  onInput={e => {
+                  onInput={(e) => {
                     this.expiryLen(e);
                   }}
                   maxLength="5"
                   placeholder="**/**"
                   required
                 ></input>
+                <div className="form__err">
+                <p
+                    className="form__msg"
+                    id="expErr"
+                    hidden
+                  >
+                    Invalid
+                  </p>
+                </div>
               </div>
-              <div className="Entry__group Cvv__group">
+              <div className="Entry__group">
                 <label className="uForm__label" htmlFor="cvv">
                   CVV
                 </label>
                 <input
                   className="uForm__input cvv_input"
                   type="text"
-                  ref={input => {
+                  ref={(input) => {
                     this.cvv = input;
                   }}
                   // onKeyUp={e => {
@@ -138,13 +170,23 @@ export default class Form extends React.Component {
                   //
                   id="cvv"
                   name="cvv"
-                  onInput={e => {
+                  onInput={(e) => {
                     this.cvvLen(e);
                   }}
+                  onBlur={ this.blurHandler }
                   maxLength="3"
                   placeholder="***"
                   required
                 ></input>
+                <div className="form__err">
+                  <p
+                    className="form__msg"
+                    id="cvvErr"
+                    hidden
+                  >
+                    Invalid
+                  </p>
+                </div>
               </div>
             </div>
             <input
@@ -153,9 +195,9 @@ export default class Form extends React.Component {
               style={{
                 backgroundColor: this.context.formInput.submitEnabled
                   ? "#FB435C"
-                  : "#d3d3d3"
+                  : "#d3d3d3",
               }}
-              ref={input => {
+              ref={(input) => {
                 this.submit = input;
               }}
               id="submit"
@@ -181,13 +223,11 @@ export default class Form extends React.Component {
             .uForm__input {
               box-sizing: border-box;
               width: 100%;
-              height: 25px;
               background: no-repeat;
               background-position: 3% center;
               border: none;
               border-bottom: 2px solid #b8b8b8;
               padding: 5px 5px 5px 25%;
-              margin-bottom: 20px;
               color: #707070;
               font-family: "Muli";
             }
@@ -231,6 +271,16 @@ export default class Form extends React.Component {
             }
             .Expiry__Group {
               margin-right: 20%;
+            }
+            .form__err {
+              display: flex;
+              align-items: center;
+              height: 25px;
+            }
+            .form__msg {
+              font-size: 12px;
+              color: red;
+              margin: 0;
             }
           `}
         </style>
