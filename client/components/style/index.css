@@ -1,0 +1,38 @@
+/* Nope cant fix it tried changing the html/body to main to h1, still ignoring, created a global style and i got this https://github.com/zeit/next.js/blob/master/errors/css-global.md */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;500;700&display=swap');
+
+@font-face {
+  font-family: 'Muli';
+  font-style: normal;
+  font-weight: 100;
+  src: url('../public/fonts/Muli-Light.ttf')
+}
+@font-face {
+  font-family: 'Muli';
+  font-style: normal;
+  font-weight: 300;
+  src: url('../public/fonts/Muli-Regular.ttf')
+}
+@font-face {
+  font-family: 'Muli';
+  font-style: normal;
+  font-weight: 500;
+  src: url('../public/fonts/Muli-Medium.ttf')
+}
+@font-face {
+  font-family: 'Muli';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../public/fonts/Muli-Bold.ttf')
+}
+* {
+  padding: 0;
+  margin: 0;
+  font-family: 'Muli', 'Montserrat';
+  color: #848484;
+}
+
+* {
+  box-sizing: border-box;
+}

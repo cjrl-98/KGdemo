@@ -31,28 +31,28 @@ const Home = () => (
       @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;500;700&display=swap')
 
       @font-face {
-        font-family: 'Muli'
+        font-family: 'Muli';
         font-style: normal;
         font-weight: 100;
-        src: url('../public/fonts/Muli-Light.ttf')
+        src: url('../public/fonts/Muli-Light.ttf');
       }
       @font-face {
-        font-family: 'Muli'
+        font-family: 'Muli';
         font-style: normal;
         font-weight: 300;
-        src: url('../public/fonts/Muli-Regular.ttf')
+        src: url('../public/fonts/Muli-Regular.ttf');
       }
       @font-face {
-        font-family: 'Muli'
+        font-family: 'Muli';
         font-style: normal;
         font-weight: 500;
-        src: url('../public/fonts/Muli-Medium.ttf')
+        src: url('../public/fonts/Muli-Medium.ttf');
       }
       @font-face {
-        font-family: 'Muli'
+        font-family: 'Muli';
         font-style: normal;
         font-weight: 700;
-        src: url('../public/fonts/Muli-Bold.ttf')
+        src: url('../public/fonts/Muli-Bold.ttf');
       }
       html,
       body {
