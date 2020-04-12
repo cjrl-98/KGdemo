@@ -4,9 +4,9 @@ import { StoreContext } from "../../store";
 
 export default class Form extends React.Component {
   static contextType = StoreContext;
+
   submitFunction(e) {
     e.preventDefault();
-    console.log("what is it doing?");
     this.context.setModalOpen(!this.context.modalOpen);
     // because this is class, this.context is necessary, unlike in UpperForm.jsx
   }
@@ -82,14 +82,17 @@ export default class Form extends React.Component {
   }
 
   blurHandler(e) {
+    const {setValSwitch} = this.context;
+    // Note: No need to destruture expVal and cvvVal here. Cuz you can spread and add any key-value pair and it will match itself if there's a dup?
+
     switch (e.target.name) {
       case "expiry":
         () => { this.context.setSelectedInput(this.context.inputNames.DEFAULT) };
         let pattern = RegExp("^(((0[5-9])|(1[0-2]))\/((20))|((0[1-9])|(1[0-2]))/([2][1-9]|[3-9][0-9]))$");
-        let expVal = pattern.test(e.target.value);
+        let expReg = pattern.test(e.target.value);
         // if input is blank and doesn't pass the regex, unhide the err message
-        if(e.target.value.length === 0 || !expVal) {
-          expErr.hidden = false
+        if(e.target.value.length === 0 || !expReg) {
+          setValSwitch(prevState => ({...prevState, expVal : false}))
           return
         }
         expErr.hidden = true;
@@ -97,7 +100,7 @@ export default class Form extends React.Component {
         
       case "cvv": 
       if(e.target.value.length === 0) {
-        cvvErr.hidden = false
+        setValSwitch(prevState => ({...prevState, cvvVal : false}))
         return
       }
       cvvErr.hidden = true;
@@ -105,15 +108,16 @@ export default class Form extends React.Component {
     }
   }
   render() {
+    const {valSwitch:{expVal, cvvVal}} = this.context;
+    // Note: in a class, have to destructure here and in the function, redundent
+    
     return (
       <>
         <div className="form">
           <h1 className="form__title">Payment Details</h1>
           <form
             className="form__entry"
-            onSubmit={(e) => {
-              this.submitFunction(e);
-            }}
+            onSubmit={e => this.submitFunction(e)}
           >
             <UpperForm />
             <div className="Form__enteries">
@@ -135,7 +139,7 @@ export default class Form extends React.Component {
                       this.context.inputNames.EXPIRYDATE
                     )
                   }
-                  onBlur={ this.blurHandler }
+                  onBlur={ e => this.blurHandler(e) }
                   id="ccExpiry"
                   name="expiry"
                   onInput={(e) => {
@@ -149,7 +153,7 @@ export default class Form extends React.Component {
                 <p
                     className="form__msg"
                     id="expErr"
-                    hidden
+                    hidden={expVal}
                   >
                     Invalid
                   </p>
@@ -173,7 +177,7 @@ export default class Form extends React.Component {
                   onInput={(e) => {
                     this.cvvLen(e);
                   }}
-                  onBlur={ this.blurHandler }
+                  onBlur={ e => this.blurHandler(e) }
                   maxLength="3"
                   placeholder="***"
                   required
@@ -182,7 +186,7 @@ export default class Form extends React.Component {
                   <p
                     className="form__msg"
                     id="cvvErr"
-                    hidden
+                    hidden={cvvVal}
                   >
                     Invalid
                   </p>
