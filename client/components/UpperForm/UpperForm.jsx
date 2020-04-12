@@ -3,7 +3,7 @@ import { StoreContext } from "../../store";
 
 // the design: https://xd.adobe.com/view/df6df630-4786-4eb5-44eb-4d5aaf9dc1f5-a95c/
 const UpperForm = () => {
-  const { formInput, setFormInput, setSelectedInput, inputNames } = useContext(StoreContext);
+  const { formInput, setFormInput, setSelectedInput, inputNames, valSwitch: {nameVal, ccVal }, setValSwitch } = useContext(StoreContext);
   const ccErr = useRef(null);
   const nameErr = useRef(null);
 
@@ -49,22 +49,23 @@ const UpperForm = () => {
   const blurHandler = e => {
     setSelectedInput(inputNames.DEFAULT);
     // Yolo, trying out switch cases 
+    
     switch (e.target.name) {
       case "name":
-        let nameVal = /^.{2,}$/g.test(e.target.value);
+        let nameReg = /^.{2,}$/g.test(e.target.value);
         // if input is blank, unhide the err message
-        if(!nameVal) nameErr.current.hidden = false;
+        if(!nameReg) setValSwitch(prevState => ({...prevState, nameVal : false}));
         // if input is filled and message is displayed, hide the err message
-        if(!nameErr.current.hidden && nameVal) nameErr.current.hidden = true;
+        if(!nameErr.current.hidden && nameReg) setValSwitch(prevState => ({...prevState, nameVal : true}));
         break;
         // without, it'll continue executing each statement in the following cases
 
       case "ccNumber":
         let cc = e.target.value.replace(/\s/g, "");
-        let ccVal = /4[0-9]{12}(?:[0-9]{3})/g.test(cc);
-        if(!ccVal) ccErr.current.hidden = false;
+        let ccReg = /4[0-9]{12}(?:[0-9]{3})/g.test(cc);
+        if(!ccReg) setValSwitch(prevState => ({...prevState, ccVal : false}));
         // Note: Cannot do this: ccErr.setAttribute("hidden", false)
-        if(!ccErr.current.hidden && ccVal ) ccErr.current.hidden = true;
+        if(!ccErr.current.hidden && ccReg ) setValSwitch(prevState => ({...prevState, ccVal : true}));
         break;
     }
   }
@@ -84,7 +85,7 @@ const UpperForm = () => {
         required
       />
       <div className="uForm__err">
-        <p className="uForm__msg" ref={nameErr} hidden>Please enter the cardholder name</p>
+        <p className="uForm__msg" ref={nameErr} hidden={nameVal}>Please enter the cardholder name</p>
       </div>
       
       <label className="uForm__label" htmlFor="ccNumber">Card Number</label>
@@ -100,7 +101,7 @@ const UpperForm = () => {
         required
       />
       <div className="uForm__err">
-        <p className="uForm__msg" ref={ccErr} hidden>Please enter a valid VISA card number</p>
+        <p className="uForm__msg" ref={ccErr} hidden={ccVal}>Please enter a valid VISA card number</p>
       </div>
     {/* since this is JSX styling, going to YOLO the css */}
     <style jsx>{`

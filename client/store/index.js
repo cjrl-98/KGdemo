@@ -22,10 +22,17 @@ export const StoreProvider = (props) => {
         'CVV' : 'CVV'
     }
 
-    const [modalOpen, setModalOpen] = useState(false)
+    const [modalOpen, setModalOpen] = useState(false);
+
+    const [valSwitch, setValSwitch] = useState({
+        "nameVal" : true,
+        "ccVal" : true,
+        "expVal" : true,
+        "cvvVal" : true
+    })
     
     return(
-        <StoreContext.Provider value={{inputNames, formInput, setFormInput, selectedInput, setSelectedInput, modalOpen, setModalOpen}}>
+        <StoreContext.Provider value={{inputNames, formInput, setFormInput, selectedInput, setSelectedInput, modalOpen, setModalOpen, valSwitch, setValSwitch}}>
             {props.children}
         </StoreContext.Provider>
     );
