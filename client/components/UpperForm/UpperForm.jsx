@@ -1,10 +1,10 @@
-import { useContext, useRef, useReducer } from "react";
+import { useContext, useRef } from "react";
 import { StoreContext } from "../../store";
 
 // the design: https://xd.adobe.com/view/df6df630-4786-4eb5-44eb-4d5aaf9dc1f5-a95c/
 const UpperForm = () => {
-  const { formInput, setFormInput, setSelectedInput, inputNames, valSwitch: {nameVal, ccVal }, setValSwitch } = useContext(StoreContext);
-  // const [state, dispatch] = useReducer(reducer, initialState);
+  const { formInput, setFormInput, setSelectedInput, inputNames, state: {nameVal, ccVal }, dispatch} = useContext(StoreContext);
+  // console.log(state)
   const ccErr = useRef(null);
   const nameErr = useRef(null);
 
@@ -48,27 +48,20 @@ const UpperForm = () => {
   };
 
   const blurHandler = e => {
-    setSelectedInput(inputNames.DEFAULT);
-    // Yolo, trying out switch cases 
-    
+    // setSelectedInput(inputNames.DEFAULT);
+    const targetVal = e.target.value
     switch (e.target.name) {
       case "name":
-        let nameReg = /^.{2,}$/g.test(e.target.value);
-        // if input is blank, unhide the err message
-        if(!nameReg) setValSwitch(prevState => ({...prevState, nameVal : false}));
-        // if input is filled and message is displayed, hide the err message
-        if(!nameErr.current.hidden && nameReg) setValSwitch(prevState => ({...prevState, nameVal : true}));
+        dispatch({type : "name", targetVal})
         break;
         // without, it'll continue executing each statement in the following cases
 
       case "ccNumber":
-        let cc = e.target.value.replace(/\s/g, "");
-        let ccReg = /4[0-9]{12}(?:[0-9]{3})/g.test(cc);
-        if(!ccReg) setValSwitch(prevState => ({...prevState, ccVal : false}));
-        // Note: Cannot do this: ccErr.setAttribute("hidden", false)
-        if(!ccErr.current.hidden && ccReg ) setValSwitch(prevState => ({...prevState, ccVal : true}));
+        dispatch({type : "ccNumber", targetVal})
         break;
     }
+    // Note: cannot do this in the HTML: onBlur={ e => dispatch({type : "nameCase", e}) } 
+    // Synthetic Event data is cleared before callback, so can't pass event directly or extract info from it https://stackoverflow.com/questions/56830141/
   }
 
   return (
@@ -82,7 +75,7 @@ const UpperForm = () => {
         placeholder="Name on Card"
         onChange={nameChange}
         onFocus={ () => setSelectedInput(inputNames.CARDHOLDERNAME) }
-        onBlur={ blurHandler }
+        onBlur={ blurHandler }        
         required
       />
       <div className="uForm__err">
